@@ -1,0 +1,56 @@
+* {
+    border: 0; 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#Calculator {
+    padding: 10px;
+    margin: 50px auto;
+    width: 300px;
+    height: 450px;
+    background-color: rgb(38, 114, 138);
+    border-radius: 5px;
+}
+
+#display, #displayCurrent {
+    width: 100%;
+    height: 50px;
+    background-color: #FFF;
+    font-size: 40px;
+    line-height: 30px;
+    text-align: right;
+    padding: 8px;
+    overflow: hidden;
+}
+
+button {
+    text-align: center;
+    margin: 9px 0;
+    width: 23.77777%;
+    height: 50px;
+    font-size: 20px;
+    border: 2px solid #00c3ff;
+}
+
+button:last-child {
+    margin: 0;
+    width: 100%;
+}
+
+#operation {
+    background-color: #21c5e2;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+#delete {
+    background-color: rgb(255, 0, 106);
+}
+
+#equal {
+    background-color: #003cff;
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>JavaScript Calculator</title>
+</head>
+<body>
+    <div id="Calculator">
+        <div id="displayCurrent"><p id="displayPcurrent"></p></div>
+        <div id="display"><p id="displayP">0</p></div>
+        <button data-number class="number">7</button>
+        <button data-number class="number">8</button>
+        <button data-number class="number">9</button>
+        <button data-operation="addition" id="operation">+</button>
+        <button data-number class="number">4</button>
+        <button data-number class="number">5</button>
+        <button data-number class="number">6</button>
+        <button data-operation="minus" id="operation">-</button>
+        <button data-number class="number">1</button>
+        <button data-number class="number">2</button>
+        <button data-number class="number">3</button>
+        <button data-operation="multiplication" id="operation">*</button>
+        <button data-operation="delete" id="delete">CE</button>
+        <button data-number class="number">0</button>
+        <button data-operation="dot" id="dot">.</button>
+        <button data-operation="division" id="operation">/</button>
+        <button data-operation="equal" id="equal">=</button>
+    </div>
+
+<script>
+    const $ = document.querySelector.bind(document)
+    const $$ = document.querySelectorAll.bind(document)
+    const keys = $('#Calculator')
+    const displayCurrent = $('#displayCurrent')
+    const displayPcurrent = $('#displayPcurrent')
+    const display = $('#display')
+    const displayP = $('#displayP')
+    const number = $('#number')
+    const action = $$('#operation')
+    const operationn = $('[data-operation]')
+
+    const dele = $('#delete')
+    const dot = $('#dot')
+    const equal = $('#equal')
+
+    keys.addEventListener('click', e => {
+        if (e.target.matches('button')) {
+            // Lấy ra các phím được nhấn
+            const key = e.target
+            // Lấy ra nội dung phím đã nhấn
+            const keyContent = key.textContent
+            // Lấy ra value của Attributes dataset của toán tử
+            const operation = key.dataset.operation
+
+            // Lấy ra số hiện tại trên màng hình
+            const currentNumber = displayP.textContent
+            // Thay đổi số trên màng hình khi nhấn vào các phím
+            if (!operation) {
+                if (currentNumber === '0') {
+                    displayP.textContent = keyContent
+                } else {
+                    displayP.textContent = currentNumber + keyContent
+                }
+            }
+
+            // Thêm dấu chấm vào màng hình
+            if (operation === 'dot') {
+                displayP.textContent = currentNumber + '.'
+            }
+
+            // Nếu là 1 trong 4 toán tử sẽ thêm vào màng hình và lưu số trước toán tử
+            // lúc đó tạo ra 1 dataset trên calculated và lưu số đó vào nó
+            // sau đó tạo ra thêm 1 dataset trên calculated và lưu tên của toán tử vào nó
+            if (operation === 'addition' || 
+                operation === 'minus' || 
+                operation === 'multiplication' || 
+                operation === 'division') 
+            {
+                displayP.textContent = currentNumber + key.textContent
+                keys.dataset.firstValue = currentNumber
+                keys.dataset.operator = operation
+                displayPcurrent.textContent = displayP.textContent
+                displayP.textContent = 0
+                // const width = display.offsetWidth
+                // const content = displayP.offsetWidth
+                // if (content === width) {
+                //     displayP.style.fontSize = 20 + 'px'
+                // }
+                // console.log(width);
+            }
+            
+            if (operation === 'equal') {
+                const firstNumber = keys.dataset.firstValue
+                const operator = keys.dataset.operator
+                const secondValue = currentNumber
+                
+                const equal = (n1, op, n2) => {
+                    let result = ''
+                    
+                    if (op === 'addition') {
+                        result = parseFloat(n1) + parseFloat(n2)
+                    } else if (operation === 'minus') {
+                        result = parseFloat(n1) - parseFloat(n2)
+                    } else if (operation === 'multiplication') {
+                        result = parseFloat(n1) * parseFloat(n2)
+                    } else if (operation === 'division') {
+                        result = parseFloat(n1) / parseFloat(n2)
+                    }
+                    
+                    return result
+                }
+
+                displayP.textContent = equal(firstNumber, operator, secondValue)
+                displayPcurrent.textContent = displayPcurrent.textContent + secondValue + keyContent
+            }
+
+            if (operation === 'delete') {
+                displayP.textContent = ''
+                displayPcurrent.textContent = ''
+            }
+        }
+    })
+
+    /** Các thứ cần thêm
+     * Thêm chức năng xóa từng số 
+     * Thêm chức năng css khi nhập số đầy display thì fontSize nhỏ lại
+     * Thêm chức năng tính toán liên tục chứ ko phải chỉ có 2 số
+    */
+</script>
+</body>
+</html>
